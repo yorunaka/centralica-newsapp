@@ -50,58 +50,68 @@ const SearchPage = (props) => {
           </div>
         ) : (
           <div>
-            <div id='title' className='text-center text-3xl pt-6 font-bold'>
+            <div id='title' className='text-center text-2xl sm:text-3xl pt-6 font-bold'>
               {props.searchValue} News
             </div>
-              <div className="grid grid-cols-3 p-36 pt-4 pb-6">
-              {currentNewsPage.map((article, index) => (
-                <div className="grid grid-flow-row m-6 gap-2" key={index}>
-                  <div className="text-sm">
-                    {article.source.name}
-                  </div>
-                  <div className="text-lg font-semibold" id="title">
-                    {article.title}
-                  </div>
-                  <div className="text-gray-500/90" id="writer">
-                    {article.author}
-                  </div>
-                  <div className="text-md line-clamp-3" id="desc">
-                    {cleanDescription(article.content) || "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Iusto officiis voluptatibus distinctio dolorum. Fugiat, nemo cumque dolorem facere a consectetur. Eius quam unde similique velit praesentium alias deserunt a adipisci amet rerum!"}
-                  </div>
-                  <div className="flex flex-row gap-4">
-                      <a href='' onClick={(e)=> {
-                        e.preventDefault()
-                        window.open(`${article.url}`, "_blank")
-                      }} rel="noopener noreferrer">
-                        <div className="h-10 flex w-fit p-4 bg-orange-400/70 rounded-lg hover:bg-orange-400/50 text-center place-items-center justify-center items-center">
-                        Read More...
-                        </div>
-                      </a>                
-                      <button className="h-10 items-center flex justify-center w-20 bg-blue-400/70 rounded-lg hover:bg-blue-400/50"
-                      onClick={(e) => {
-                        e.preventDefault()
-                        handleDuplicate(article)}}>
-                      Save
-                    </button>
-                  </div>
+          <div className="grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 gap-6 px-12 py-8 lg:px-36">
+            {currentNewsPage.map((article, index) => (
+              <div className="grid grid-flow-row gap-2 p-4 rounded-lg border border-gray-300 shadow-sm sm:hover:bg-orange-200/50 md:border-none md:shadow-none md:hover:bg-transparent" key={index}>
+                <div className="text-xs sm:text-sm text-gray-500">
+                  {article.source.name}
                 </div>
-              ))}
-      
-            </div>
-            {pageNumbers.length > 0 && (
-              <div className="join flex justify-center mt-4 pb-20">
-              {pageNumbers.map((number) => (
-                <button
+                <div className="text-lg font-semibold" id="title">
+                  {article.title}
+                </div>
+                <div className="text-sm sm:text-md text-gray-400" id="writer">
+                  {article.author}
+                </div>
+                <div className="text-sm sm:text-md text-gray-600 line-clamp-3" id="desc">
+                  {cleanDescription(article.content) ||
+                    "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Iusto officiis voluptatibus distinctio dolorum. Fugiat, nemo cumque dolorem facere a consectetur. Eius quam unde similique velit praesentium alias deserunt a adipisci amet rerum!"}
+                </div>
+                <div className="flex flex-row justify-center md:justify-start lg:justify-start gap-2 sm:gap-4 mt-2">
+                  <a
+                    href=''
+                    onClick={(e) => {
+                      e.preventDefault()
+                      window.open(`${article.url}`, "_blank")
+                    }}
+                    rel="noopener noreferrer"
+                    className="h-10 flex items-center justify-center px-4 bg-orange-400/70 rounded-lg hover:bg-orange-400/50 text-center text-sm sm:text-md"
+                  >
+                    Read More...
+                  </a>
+                  <button
+                    className="h-10 flex items-center justify-center px-4 bg-blue-400/70 rounded-lg hover:bg-blue-400/50 text-sm sm:text-md"
+                    onClick={(e) => {
+                      e.preventDefault()
+                      handleDuplicate(article)
+                    }}
+                  >
+                    Save
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+          {pageNumbers.length > 0 && (
+            <div className="flex justify-center mt-4 pb-8 join">
+              {pageNumbers.map((number) => (              
+                <div
                   key={number}
                   onClick={() => paginate(number)}
-                  className={`px-4 py-2 shadow-md join-item ${currentPage === number ? 'bg-blue-500 hover:bg-blue-600 transition delay-50 text-white' : 'bg-gray-200 hover:bg-blue-400/30 transition delay-50'}`}
+                  className={`join-item btn btn-sm btn-square shadow-md text-xs transition delay-50 md:text-md md:btn-md ${
+                    currentPage === number
+                      ? 'bg-blue-500 hover:bg-blue-600 text-white'
+                      : 'bg-gray-200 hover:bg-blue-400/30'
+                  }`}
                 >
                   {number}
-                </button>
+                </div>    
               ))}
             </div>
-            )}
-          </div>
+          )}
+        </div>
             )
       )}
 

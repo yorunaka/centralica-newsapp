@@ -35,16 +35,16 @@ const Indonesia = (props) => {
 
   return (
     <div>
-      <div id='title' className='text-center text-2xl sm:text-3xl lg:text-4xl pt-6 font-bold'>
-        Indonesia News
-      </div>
       {loading ? (
-        <div className='flex flex-col items-center'>
+        <div className='flex flex-col items-center pt-6'>
           <div className='pt-24 loading loading-ring loading-lg'></div>
           <div className='text-black text-lg sm:text-xl lg:text-2xl'>Fetching News...</div>
         </div>
       ) : (
         <div>
+            <div id='title' className='text-center text-2xl sm:text-3xl pt-6 font-bold'>
+              Indonesia News
+            </div>
           <div className="grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 gap-6 px-12 py-8 lg:px-36">
             {currentNewsPage.map((article, index) => (
               <div className="grid grid-flow-row gap-2 p-4 rounded-lg border border-gray-300 shadow-sm sm:hover:bg-orange-200/50 md:border-none md:shadow-none md:hover:bg-transparent" key={index}>
@@ -87,32 +87,19 @@ const Indonesia = (props) => {
             ))}
           </div>
           {pageNumbers.length > 0 && (
-            <div className="flex justify-center mt-4 pb-8">
-              {pageNumbers.map((number, index) => (
-                <div className='join'>                  
-                  <div
-                    key={number}
-                    onClick={() => paginate(number)}
-                    className={`join-item btn btn-sm shadow-md text-xs sm:text-md transition delay-50 ${
-                      currentPage === number
-                        ? 'bg-blue-500 hover:bg-blue-600 text-white'
-                        : 'bg-gray-200 hover:bg-blue-400/30'
-                    }`}
-                  >
-                    {number}
-                  </div>                
-                  <button
-                    key={index+1}
-                    onClick={() => paginate(index)}
-                    className={`px-4 py-2 shadow-md text-sm sm:text-md join-item transition delay-50 hidden ${
-                      currentPage === index
-                        ? 'bg-blue-500 hover:bg-blue-600 text-white'
-                        : 'bg-gray-200 hover:bg-blue-400/30'
-                    }`}
-                  >
-                    {index}
-                  </button>
-                </div>
+            <div className="flex justify-center mt-4 pb-8 join">
+              {pageNumbers.map((number) => (              
+                <div
+                  key={number}
+                  onClick={() => paginate(number)}
+                  className={`join-item btn btn-sm btn-square shadow-md text-xs transition delay-50 md:text-md md:btn-md ${
+                    currentPage === number
+                      ? 'bg-blue-500 hover:bg-blue-600 text-white'
+                      : 'bg-gray-200 hover:bg-blue-400/30'
+                  }`}
+                >
+                  {number}
+                </div>    
               ))}
             </div>
           )}

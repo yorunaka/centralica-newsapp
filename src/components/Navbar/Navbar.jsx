@@ -29,8 +29,8 @@ const Navbar = (props) => {
   return (
     <div>      
       {/* Navbar */}
-      <section className="min-w-full h-52 bg-red-100 flex flex-row justify-around content-center drop-shadow-lg p-4 sm:p-8 md:grid-cols-2 lg:grid-cols-1 lg:gap-36">
-        <div className="flex flex-row items-center w-1/2 md:w-fit">
+      <section className="min-w-full h-52 bg-red-100 flex flex-row justify-around content-center drop-shadow-lg p-4 md:grid-cols-2 lg:grid-cols-1">
+        <div className="flex flex-row items-center w-1/2 lg:justify-center lg:content-center">
           <input 
             type="text" 
             name="searchbox" 
@@ -105,7 +105,7 @@ const Navbar = (props) => {
             Saved
           </NavLink>
         </ul>
-        <hr className="mt-4 sm:mt-6" />
+        <hr className="" />
       </div>
     </div>
   )
