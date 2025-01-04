@@ -66,7 +66,13 @@ const Saved = () => {
                 {article.author}
               </td>
               <th className='flex flex-row gap-4 h-full mx-auto'>
-                <a href={article.url}>
+                <a href={article.url}
+                onClick={
+                  (e) => {
+                    e.preventDefault()
+                    window.open(`${article.url}`, "_blank")
+                  }
+                }>
                   <button className="btn font-medium bg-orange-400/80 px-3 py-2 rounded-md hover:bg-orange-600/60">News Page</button>
                 </a>
                 <label htmlFor='deleteNewsPopUp' className="btn font-medium bg-red-500/80 px-3 py-2 rounded-md hover:bg-red-600/90 hover:text-white"
