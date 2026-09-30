@@ -1,3 +1,5 @@
+// handle search still on dummy
+
 import React from 'react'
 import { useState } from 'react'
 import { NavLink } from 'react-router'
@@ -6,6 +8,7 @@ import logo from '/src/assets/logo.png'
 
 const Navbar = (props) => {
   const [searchValue, setSearchValue] = useState('')
+  const [isOpen, setIsOpen] = useState(false)
   const navigate = useNavigate()
   const location = useLocation()
 
@@ -14,12 +17,33 @@ const Navbar = (props) => {
   }
   
   const handleSearch = (e) => {
-    e.preventDefault()
-    if(searchValue.trim() != ''){
-      navigate(`/search/${searchValue}`)
+    e?.preventDefault()
+    // if(searchValue.trim() != ''){
+    //   navigate(`/search/${searchValue}`)
+    // }
+    // props.newsValue(searchValue)
+    // setSearchValue('')
+    console.log(searchValue)
+  }
+
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      e?.preventDefault()
+
+      const isMobile = window.innerWidth < 768; // Adjust the breakpoint as needed
+      if (!isMobile) {
+        handleSearch(e)
+      }
     }
-    props.newsValue(searchValue)
-    setSearchValue('')
+  }
+
+  const handleButton = () =>{
+    if(!isOpen){
+      setIsOpen(true)
+    } else {
+      handleSearch()
+    }
+     
   }
 
   if(location.pathname === '/error'){
@@ -29,41 +53,45 @@ const Navbar = (props) => {
   return (
     <div>      
       {/* Navbar */}
-      <section className="min-w-full h-52 bg-red-100 flex flex-row justify-around content-center drop-shadow-lg p-4 md:grid-cols-2 lg:grid-cols-1">
-        <div className="flex flex-row items-center w-1/2 lg:justify-center lg:content-center">
-          <input 
-            type="text" 
-            name="searchbox" 
-            id="searchinputform" 
-            placeholder="Search..." 
-            className="px-4 py-2 border border-gray-300 rounded-l-md w-full md:w-auto"
-            value={searchValue}
-            onChange={(e) => {
-              handleInputChange(e.target.value)
-            }}
-          />
-          <a href=""
-            type='submit'
-            onClick={handleSearch}>          
-            <div className="bg-yellow-950/40 px-4 py-2.5 rounded-r-md hover:bg-yellow-950/50 flex justify-center items-center">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 50 50">
-                <path d="M 21 3 C 11.621094 3 4 10.621094 4 20 C 4 29.378906 11.621094 37 21 37 C 24.710938 37 28.140625 35.804688 30.9375 33.78125 L 44.09375 46.90625 L 46.90625 44.09375 L 33.90625 31.0625 C 36.460938 28.085938 38 24.222656 38 20 C 38 10.621094 30.378906 3 21 3 Z M 21 5 C 29.296875 5 36 11.703125 36 20 C 36 28.296875 29.296875 35 21 35 C 12.703125 35 6 28.296875 6 20 C 6 11.703125 12.703125 5 21 5 Z"></path>
-              </svg>
-            </div>
-          </a>
-        </div>
-        <div className='flex sm:justify-items-center sm:items-center md:flex-col md:gap-0 lg:grid lg:grid-cols-2 lg:justify-items-center lg:w-full'>
-          <div className="mt-4 hidden md:mt-0 md:hidden lg:block">
-            <a href="" className='text-center'>
-              <h1 className="text-2xl sm:text-3xl font-semibold">Centralica News</h1>
-              <p className="text-sm sm:text-base">Berita Terbaru Dimanapun, dan Kapanpun.</p>
-            </a>
-          </div>
+      <section className="w-full h-52 bg-red-100 drop-shadow-lg p-4 ">
+        <div className='grid grid-flow-col grid-cols-3 md:flex-row md:justify-between md:items-center lg:flex-row lg:justify-items-center lg:items-center'>
           <div className="h-auto md:mt-0">
-            <a href="">
-              <img src={logo} alt="logo" className="h-32 w-32 sm:h-32 sm:w-32 md:h-40 md:w-40" />
-            </a>
+              <a href="">
+                <img src={logo} alt="logo" className="h-32 w-32 sm:h-32 sm:w-32 md:h-40 md:w-40" />
+              </a>
           </div>
+
+          <div className='flex sm:justify-items-center sm:items-center md:flex-col md:gap-0 lg:justify-items-center lg:w-full'>
+            <div className="mt-4 hidden md:mt-0 md:hidden lg:block">
+              <a href="" className='text-center'>
+                <h1 className="text-2xl sm:text-3xl font-semibold">Centralica News</h1>
+                <p className="text-sm sm:text-base">Berita Terbaru Dimanapun, dan Kapanpun.</p>
+              </a>
+            </div>
+          </div>
+          <div className="flex flex-row items-center w-1/2 lg:justify-center lg:content-center">
+          { isOpen && (
+              <input 
+                type="text" 
+                placeholder="Search..."
+                className="px-4 py-2 border border-gray-300 rounded-l-md transition delay-300 duration-300 ease-in-out w-full md:w-auto"
+                value={searchValue}
+                onChange={(e) => {
+                  handleInputChange(e.target.value)
+                }}
+                onKeyDown={handleKeyDown}
+              />
+            )}
+            <button
+              type='button'
+              aria-label='search'
+              onClick={handleButton}
+              className={`bg-yellow-950/40 px-4 py-2.5 rounded-md hover:bg-yellow-950/50 cursor-pointer transition-colors flex justify-center items-center ${isOpen ? 'rounded-l-none' : ''}`}>
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 50 50">
+                  <path d="M 21 3 C 11.621094 3 4 10.621094 4 20 C 4 29.378906 11.621094 37 21 37 C 24.710938 37 28.140625 35.804688 30.9375 33.78125 L 44.09375 46.90625 L 46.90625 44.09375 L 33.90625 31.0625 C 36.460938 28.085938 38 24.222656 38 20 C 38 10.621094 30.378906 3 21 3 Z M 21 5 C 29.296875 5 36 11.703125 36 20 C 36 28.296875 29.296875 35 21 35 C 12.703125 35 6 28.296875 6 20 C 6 11.703125 12.703125 5 21 5 Z"></path>
+                </svg>
+            </button>
+          </div>    
         </div>
       </section>
       
@@ -105,7 +133,9 @@ const Navbar = (props) => {
             Saved
           </NavLink>
         </ul>
-        <hr className="" />
+        <div className='grid justify-items-center'>
+          <hr className="w-[1500px]" />
+        </div>
       </div>
     </div>
   )
