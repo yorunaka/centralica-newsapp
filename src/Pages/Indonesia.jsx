@@ -42,7 +42,7 @@ const Indonesia = (props) => {
         </div>
       ) : (
         <div>
-            <div id='title' className='text-center text-2xl sm:text-3xl pt-6 font-bold'>
+            <div id='title' className='text-center text-2xl sm:text-3xl pt-6 font-bold cursor-default'>
               Indonesia News
             </div>
           <div className="grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 gap-6 px-12 py-8 lg:px-36">

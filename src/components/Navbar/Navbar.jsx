@@ -1,5 +1,3 @@
-// handle search still on dummy
-
 import React from 'react'
 import { useState } from 'react'
 import { NavLink } from 'react-router'
@@ -18,12 +16,12 @@ const Navbar = (props) => {
   
   const handleSearch = (e) => {
     e?.preventDefault()
-    // if(searchValue.trim() != ''){
-    //   navigate(`/search/${searchValue}`)
-    // }
-    // props.newsValue(searchValue)
-    // setSearchValue('')
-    console.log(searchValue)
+    if(searchValue.trim() != ''){
+      navigate(`/search/${searchValue}`)
+    }
+    props.newsValue(searchValue)
+    setSearchValue('')
+    // console.log(searchValue)
   }
 
   const handleKeyDown = (e) => {
@@ -37,11 +35,11 @@ const Navbar = (props) => {
     }
   }
 
-  const handleButton = () =>{
+  const handleButton = (e) =>{
     if(!isOpen){
       setIsOpen(true)
     } else {
-      handleSearch()
+      handleSearch(e)
     }
      
   }
@@ -74,7 +72,11 @@ const Navbar = (props) => {
               <input 
                 type="text" 
                 placeholder="Search..."
-                className="px-4 py-2 border border-gray-300 rounded-l-md transition delay-300 duration-300 ease-in-out w-full md:w-auto"
+                className={`transition-all duration-300 delay-300 ease-in-out overflow-hidden border border-gray-300 focus:outline-none focus:border-yellow-900 ${
+                  isOpen 
+                    ? 'w-full md:w-64 px-4 py-2 opacity-100 rounded-l-md pointer-events-auto' 
+                    : 'w-0 px-0 py-2 opacity-0 border-transparent pointer-events-none'
+                }`}
                 value={searchValue}
                 onChange={(e) => {
                   handleInputChange(e.target.value)

@@ -4,6 +4,7 @@ import Navbar from "./components/Navbar/Navbar"
 import Index from "./Router/Index"
 import { useDispatch } from 'react-redux'
 
+
 function App() {
   const [searchValue, setSearchValue] = useState('')
   const dispatch = useDispatch()
@@ -18,7 +19,7 @@ function App() {
 
   const getNewsData = async (newsCategory = 'indonesia') => {
     try {
-      const response = await axios.get(`${import.meta.env.VITE_REACT_APP_BACKEND_API_BASEURL}/api/news`, {
+      const response = await axios.get(`http://localhost:5000/api/news`, {
         params: {category: newsCategory}
       })
       // throw new Error('Simulated API Failure')
